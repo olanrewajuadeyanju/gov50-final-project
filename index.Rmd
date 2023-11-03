@@ -12,3 +12,53 @@ output:
 ## Project thoughts
 
 Are governments in Africa more likely to use repression or violence against events (violent or nonviolent actions taken) that are located in urban areas? In this study, I plan to examine the relationship between the type of location of events and if they are faced with violence or repression from the government. I hypothesize that events taken at capital cities or major urban areas are faced with repression by the government, and events that are taken at more rural locations face relatively lower repression. I expect to find that events taken at capital cities and major urban areas face more repression. This is because major urban cities allow for easier mobilization and resource allocation for events (violent or nonviolent actions taken) and therefore pose a bigger threat to the government and are consequently faced with more repression. My data set consists of violent and nonviolent actions taken in Africa. My unit of analysis is an event (violent or nonviolent actions taken). My explanatory variable of interest is the location of events or action taken. (Coding of the event locality 1 = Capital city; 2 = Other major urban area (population greater than 100,000); 3 = Rural (including small towns, villages with population less than 100,000); 4 = Multiple urban areas; 5 = Multiple rural areas; 6 = Province/region listed, exact location unknown; 7 = Nationwide. Effects several cities and rural areas;  -99 = location unknown). My outcome variable of interest is whether the government used repression or violence against participants in the event. For instance, if the variable were coded 0 = no repression used, 1 = non-lethal repression used (e.g. tear gas, arrests, etc), 2 = lethal repression used (there must be deaths reported). This variable is measured from the Social Conflict Analysis Database (SCAD). If I observe greater repression usage for actions in major cities or urban areas, this would provide support for my hypothesis. If, on the other hand, I observe lower repression usage or the same level of repression as in rural areas, this would provide evidence against my hypothesis. When I run my regression of the count of events in urban areas and major cities on the repression variable, a positive, significant coefficient would indicate support for my hypothesis.
+
+
+## Milestone 3 
+
+
+
+```{r}
+library(tidyverse)
+
+Data1 <- read_csv("C:\\Users\\temit\\OneDrive\\GOV50\\Final GOV 50 Project\\SCAD2018Africa_Final.csv")
+
+# Create a binary variable for urban or rural
+Data1 <- Data1 |>
+  mutate(urban_rural = case_when(
+    locnum %in% c(1, 2, 4) ~ "Urban",
+    locnum %in% c(3, 5) ~ "Rural",
+    TRUE ~ "Other" # For the remaining locations
+  ))
+
+# Create a GovResponse variable based on the escalation variable
+Data1 <- Data1 |>
+  mutate(GovResponse = case_when(
+    escalation == 0 ~ "No Repression Used",
+    escalation == 1 ~ "Non-lethal Repression Used (e.g., tear gas, arrests)",
+    escalation == 2 ~ "Lethal Repression Used (deaths reported)",
+    TRUE ~ "Other" # For other cases
+  ))
+
+# Create a data visualization
+Data1 |>
+  group_by(urban_rural, GovResponse) |>
+  summarize(Count = n()) |>
+  group_by(urban_rural) |>
+  mutate(Proportion = Count / sum(Count)) |>
+  ggplot(aes(x = urban_rural, y = Proportion, fill = GovResponse)) +
+  geom_bar(stat = "identity") +
+  labs(
+    title = "Government Response by Event Location",
+    x = "Event Location",
+    y = "Proportion of Events",
+    fill = "Government Response"
+  ) +
+  scale_fill_manual(values = c("No Repression Used" = "steelblue", "Non-lethal Repression Used (e.g., tear gas, arrests)" = "yellow", "Lethal Repression Used (deaths reported)" = "indianred", "Other" = "darkgreen")) +
+  theme_minimal()
+
+
+```
+
+
+
