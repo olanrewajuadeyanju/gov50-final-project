@@ -67,7 +67,6 @@ This second visualization analyzes the outcome variable, 'Government response', 
 
 ```{r}
 
-
 # Create a second data visualization showing how the type of issue influences repression tactic
 Data2 <- subset(Data1, issue1 != -99)
 
