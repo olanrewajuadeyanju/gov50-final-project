@@ -47,7 +47,7 @@ Data1 |>
   labs(
     title = "Government Response by Event Location",
     x = "Event Location",
-    y = "Proportion of Events",
+    y = "% of Repression Tactics",
     fill = "Government Response"
   ) +
   scale_fill_manual(
@@ -62,7 +62,7 @@ Data1 |>
 
 ## Milestone 4: Analysis
 
-This second visualization analyzes the outcome variable, 'Government response', in relation to another categorical variable, 'issue1'. The focus is on understanding the variation in government use of repression during events, based on the first issue mentioned as the primary source of tension leading to the taken action (violent or nonviolent). The initial visualization did not provide a substantial difference in government repression across our x variable, location. To better understand the factors influencing government repression, we utilize the 'issue1' categorical variable, testing it across each category (1 = elections; 2 = economy, jobs; 3 = food, water, subsistence; 4 = environmental degradation; 5 = ethnic discrimination, ethnic issues; 6 = religious discrimination, religious issues; 7 = education; 8 = foreign affairs/relations; 9 = domestic war, violence, terrorism; 10 = human rights, democracy; 11 = pro-government; 12 = economic resources/assets; 13 = other; 14 = unknown, not-specified). This analysis reveals significant variation in the types of issues prompting government repression.
+This second visualization analyzes the outcome variable, 'Government response', in relation to another categorical variable, 'issue1'. The focus is on understanding the variation in government use of repression during events, based on the first issue mentioned as the primary source of tension leading to the taken action (violent or nonviolent). The initial visualization in milestone 3 did not provide a substantial difference in government repression across our x variable, location. To better understand the factors influencing government repression, we utilize the 'issue1' categorical variable, testing it across each category (1 = elections; 2 = economy, jobs; 3 = food, water, subsistence; 4 = environmental degradation; 5 = ethnic discrimination, ethnic issues; 6 = religious discrimination, religious issues; 7 = education; 8 = foreign affairs/relations; 9 = domestic war, violence, terrorism; 10 = human rights, democracy; 11 = pro-government; 12 = economic resources/assets; 13 = other; 14 = unknown, not-specified). This analysis reveals significant variation in the types of issues prompting government repression.
 
 
 ```{r}
@@ -98,7 +98,7 @@ Data2 |>
   ggplot(aes(x = issue1, y = Proportion, fill = GovResponse)) +
   geom_bar(stat = "identity") +
   labs(
-    title = "Government Response by Event Location",
+    title = "Government Response by Issue Leading to Action",
     x = "First issue that started action taken",
     y = "% of Repression Tactics",
     fill = "Government Response"

@@ -1551,7 +1551,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>labs</a></span><span class='op'>(</span></span>
 <span>    title <span class='op'>=</span> <span class='st'>"Government Response by Event Location"</span>,</span>
 <span>    x <span class='op'>=</span> <span class='st'>"Event Location"</span>,</span>
-<span>    y <span class='op'>=</span> <span class='st'>"Proportion of Events"</span>,</span>
+<span>    y <span class='op'>=</span> <span class='st'>"% of Repression Tactics"</span>,</span>
 <span>    fill <span class='op'>=</span> <span class='st'>"Government Response"</span></span>
 <span>  <span class='op'>)</span> <span class='op'>+</span></span>
 <span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/scale_manual.html'>scale_fill_manual</a></span><span class='op'>(</span></span>
@@ -1563,7 +1563,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <p><img src="index_files/figure-html5/unnamed-chunk-1-1.png" width="624" /></p>
 </div>
 <h2 id="milestone-4-analysis">Milestone 4: Analysis</h2>
-<p>This second visualization analyzes the outcome variable, ‘Government response’, in relation to another categorical variable, ‘issue1’. The focus is on understanding the variation in government use of repression during events, based on the first issue mentioned as the primary source of tension leading to the taken action (violent or nonviolent). The initial visualization did not provide a substantial difference in government repression across our x variable, location. To better understand the factors influencing government repression, we utilize the ‘issue1’ categorical variable, testing it across each category (1 = elections; 2 = economy, jobs; 3 = food, water, subsistence; 4 = environmental degradation; 5 = ethnic discrimination, ethnic issues; 6 = religious discrimination, religious issues; 7 = education; 8 = foreign affairs/relations; 9 = domestic war, violence, terrorism; 10 = human rights, democracy; 11 = pro-government; 12 = economic resources/assets; 13 = other; 14 = unknown, not-specified). This analysis reveals significant variation in the types of issues prompting government repression.</p>
+<p>This second visualization analyzes the outcome variable, ‘Government response’, in relation to another categorical variable, ‘issue1’. The focus is on understanding the variation in government use of repression during events, based on the first issue mentioned as the primary source of tension leading to the taken action (violent or nonviolent). The initial visualization in milestone 3 did not provide a substantial difference in government repression across our x variable, location. To better understand the factors influencing government repression, we utilize the ‘issue1’ categorical variable, testing it across each category (1 = elections; 2 = economy, jobs; 3 = food, water, subsistence; 4 = environmental degradation; 5 = ethnic discrimination, ethnic issues; 6 = religious discrimination, religious issues; 7 = education; 8 = foreign affairs/relations; 9 = domestic war, violence, terrorism; 10 = human rights, democracy; 11 = pro-government; 12 = economic resources/assets; 13 = other; 14 = unknown, not-specified). This analysis reveals significant variation in the types of issues prompting government repression.</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span><span class='co'># Create a second data visualization showing how the type of issue influences repression tactic</span></span>
@@ -1597,7 +1597,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>issue1</span>, y <span class='op'>=</span> <span class='va'>Proportion</span>, fill <span class='op'>=</span> <span class='va'>GovResponse</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span></span>
 <span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_bar.html'>geom_bar</a></span><span class='op'>(</span>stat <span class='op'>=</span> <span class='st'>"identity"</span><span class='op'>)</span> <span class='op'>+</span></span>
 <span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>labs</a></span><span class='op'>(</span></span>
-<span>    title <span class='op'>=</span> <span class='st'>"Government Response by Event Location"</span>,</span>
+<span>    title <span class='op'>=</span> <span class='st'>"Government Response by Issue Leading to Action"</span>,</span>
 <span>    x <span class='op'>=</span> <span class='st'>"First issue that started action taken"</span>,</span>
 <span>    y <span class='op'>=</span> <span class='st'>"% of Repression Tactics"</span>,</span>
 <span>    fill <span class='op'>=</span> <span class='st'>"Government Response"</span></span>
