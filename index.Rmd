@@ -73,6 +73,7 @@ Data1 |>
 # Load necessary libraries
 library(tidyverse)
 library(broom)
+library(knitr)
 
 # Create dummy variables for 'Non-Lethal Repression', 'Lethal Repression', and 'No Repression Used'
 Data1 <- Data1 |>
@@ -96,16 +97,15 @@ summary_no_repression <- tidy(model_no_repression)
 summary_non_lethal_repression <- tidy(model_non_lethal_repression)
 summary_lethal_repression <- tidy(model_lethal_repression)
 
-# Display the summaries
+# Display the summaries using kable
 print("No Repression:")
-print(summary_no_repression)
+kable(summary_no_repression, digits = 3, caption = "No Repression Model")
 
 print("Non-Lethal Repression:")
-print(summary_non_lethal_repression)
+kable(summary_non_lethal_repression, digits = 3, caption = "Non-Lethal Repression Model")
 
 print("Lethal Repression:")
-print(summary_lethal_repression)
-
+kable(summary_lethal_repression, digits = 3, caption = "Lethal Repression Model")
 
 
 ```
@@ -139,24 +139,18 @@ These results indicate that the type of governmental response varies across diff
 # Load necessary libraries
 library(ggplot2)
 
-# Combine the summary tables for all three models
-combined_summary <- bind_rows(
-  mutate(summary_no_repression, Model = "No Repression"),
-  mutate(summary_non_lethal_repression, Model = "Non-Lethal Repression"),
-  mutate(summary_lethal_repression, Model = "Lethal Repression")
-)
-
-# Create a forest plot
+# Create a coefficient plot using bar charts
 ggplot(combined_summary, aes(x = estimate, y = Model)) +
-  geom_point(aes(color = factor(term)), size = 3) +
-  geom_errorbarh(aes(xmin = estimate - 1.96 * std.error, xmax = estimate + 1.96 * std.error), height = 0.2) +
-  labs(title = "Forest Plot of Regression Coefficients by Location",
+  geom_col(aes(fill = factor(term)), position = "dodge") +
+  labs(title = "Coefficient Plot of Regression Coefficients by Location",
        x = "Coefficient Estimate",
        y = "Model") +
   theme_minimal()
 
 
 ```
+
+The coefficient plot visually represents the estimated coefficients from the logistic regression models for different repression categories ("No Repression," "Non-Lethal Repression," and "Lethal Repression") across different location types ("Rural," "Urban," and "Other"). The plot allows for comparison of the coefficients for each location type within the same model and across different repression categories. Each bar represents the estimated effect (log-odds) of a specific location type on the likelihood of a particular government repression category. The direction of the bars indicates whether the effect is positive or negative. A positive coefficient suggests an increase in the likelihood of the repression category, while a negative coefficient suggests a decrease. The length of the bars indicates the magnitude of the effect. 
 
 
 
