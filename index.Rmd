@@ -136,8 +136,16 @@ These results indicate that the type of governmental response varies across diff
 
 ```{r}
 
-# Load necessary libraries
+# Load libraries
 library(ggplot2)
+
+# Combine the summary tables for all three models
+combined_summary <- bind_rows(
+  mutate(summary_no_repression, Model = "No Repression"),
+  mutate(summary_non_lethal_repression, Model = "Non-Lethal Repression"),
+  mutate(summary_lethal_repression, Model = "Lethal Repression")
+)
+
 
 # Create a coefficient plot using bar charts
 ggplot(combined_summary, aes(x = estimate, y = Model)) +

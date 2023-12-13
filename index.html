@@ -1572,6 +1572,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <pre class="sourceCode r"><code class="sourceCode r"><span><span class='co'># Load necessary libraries</span></span>
 <span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://tidyverse.tidyverse.org'>tidyverse</a></span><span class='op'>)</span></span>
 <span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://broom.tidymodels.org/'>broom</a></span><span class='op'>)</span></span>
+<span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://yihui.org/knitr/'>knitr</a></span><span class='op'>)</span></span>
 <span></span>
 <span><span class='co'># Create dummy variables for 'Non-Lethal Repression', 'Lethal Repression', and 'No Repression Used'</span></span>
 <span><span class='va'>Data1</span> <span class='op'>&lt;-</span> <span class='va'>Data1</span> <span class='op'>|&gt;</span></span>
@@ -1595,45 +1596,132 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <span><span class='va'>summary_non_lethal_repression</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://generics.r-lib.org/reference/tidy.html'>tidy</a></span><span class='op'>(</span><span class='va'>model_non_lethal_repression</span><span class='op'>)</span></span>
 <span><span class='va'>summary_lethal_repression</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://generics.r-lib.org/reference/tidy.html'>tidy</a></span><span class='op'>(</span><span class='va'>model_lethal_repression</span><span class='op'>)</span></span>
 <span></span>
-<span><span class='co'># Display the summaries</span></span>
+<span><span class='co'># Display the summaries using kable</span></span>
 <span><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='st'>"No Repression:"</span><span class='op'>)</span></span></code></pre>
 </div>
 <pre><code>[1] &quot;No Repression:&quot;</code></pre>
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>summary_no_repression</span><span class='op'>)</span></span></code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://rdrr.io/pkg/knitr/man/kable.html'>kable</a></span><span class='op'>(</span><span class='va'>summary_no_repression</span>, digits <span class='op'>=</span> <span class='fl'>3</span>, caption <span class='op'>=</span> <span class='st'>"No Repression Model"</span><span class='op'>)</span></span></code></pre>
 </div>
-<pre><code># A tibble: 3 × 5
-  term             estimate std.error statistic   p.value
-  &lt;chr&gt;               &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
-1 (Intercept)        1.08      0.0356    30.4   4.16e-203
-2 urban_ruralRural  -0.0358    0.0493    -0.727 4.67e-  1
-3 urban_ruralUrban  -0.235     0.0424    -5.55  2.81e-  8</code></pre>
+<table>
+<caption><span id="tab:unnamed-chunk-2">Table 1: </span>No Repression Model</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">term</th>
+<th style="text-align: right;">estimate</th>
+<th style="text-align: right;">std.error</th>
+<th style="text-align: right;">statistic</th>
+<th style="text-align: right;">p.value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">(Intercept)</td>
+<td style="text-align: right;">1.083</td>
+<td style="text-align: right;">0.036</td>
+<td style="text-align: right;">30.409</td>
+<td style="text-align: right;">0.000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">urban_ruralRural</td>
+<td style="text-align: right;">-0.036</td>
+<td style="text-align: right;">0.049</td>
+<td style="text-align: right;">-0.727</td>
+<td style="text-align: right;">0.467</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">urban_ruralUrban</td>
+<td style="text-align: right;">-0.235</td>
+<td style="text-align: right;">0.042</td>
+<td style="text-align: right;">-5.553</td>
+<td style="text-align: right;">0.000</td>
+</tr>
+</tbody>
+</table>
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='st'>"Non-Lethal Repression:"</span><span class='op'>)</span></span></code></pre>
 </div>
 <pre><code>[1] &quot;Non-Lethal Repression:&quot;</code></pre>
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>summary_non_lethal_repression</span><span class='op'>)</span></span></code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://rdrr.io/pkg/knitr/man/kable.html'>kable</a></span><span class='op'>(</span><span class='va'>summary_non_lethal_repression</span>, digits <span class='op'>=</span> <span class='fl'>3</span>, caption <span class='op'>=</span> <span class='st'>"Non-Lethal Repression Model"</span><span class='op'>)</span></span></code></pre>
 </div>
-<pre><code># A tibble: 3 × 5
-  term             estimate std.error statistic  p.value
-  &lt;chr&gt;               &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
-1 (Intercept)      -1.89       0.0459  -41.3    0       
-2 urban_ruralRural  0.00191    0.0638    0.0299 9.76e- 1
-3 urban_ruralUrban  0.595      0.0526   11.3    1.19e-29</code></pre>
+<table>
+<caption><span id="tab:unnamed-chunk-2">Table 1: </span>Non-Lethal Repression Model</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">term</th>
+<th style="text-align: right;">estimate</th>
+<th style="text-align: right;">std.error</th>
+<th style="text-align: right;">statistic</th>
+<th style="text-align: right;">p.value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">(Intercept)</td>
+<td style="text-align: right;">-1.894</td>
+<td style="text-align: right;">0.046</td>
+<td style="text-align: right;">-41.257</td>
+<td style="text-align: right;">0.000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">urban_ruralRural</td>
+<td style="text-align: right;">0.002</td>
+<td style="text-align: right;">0.064</td>
+<td style="text-align: right;">0.030</td>
+<td style="text-align: right;">0.976</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">urban_ruralUrban</td>
+<td style="text-align: right;">0.595</td>
+<td style="text-align: right;">0.053</td>
+<td style="text-align: right;">11.308</td>
+<td style="text-align: right;">0.000</td>
+</tr>
+</tbody>
+</table>
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='st'>"Lethal Repression:"</span><span class='op'>)</span></span></code></pre>
 </div>
 <pre><code>[1] &quot;Lethal Repression:&quot;</code></pre>
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>summary_lethal_repression</span><span class='op'>)</span></span></code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://rdrr.io/pkg/knitr/man/kable.html'>kable</a></span><span class='op'>(</span><span class='va'>summary_lethal_repression</span>, digits <span class='op'>=</span> <span class='fl'>3</span>, caption <span class='op'>=</span> <span class='st'>"Lethal Repression Model"</span><span class='op'>)</span></span></code></pre>
 </div>
-<pre><code># A tibble: 3 × 5
-  term             estimate std.error statistic  p.value
-  &lt;chr&gt;               &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
-1 (Intercept)       -1.97      0.0473   -41.7   0       
-2 urban_ruralRural   0.0602    0.0650     0.927 3.54e- 1
-3 urban_ruralUrban  -0.396     0.0604    -6.55  5.69e-11</code></pre>
+<table>
+<caption><span id="tab:unnamed-chunk-2">Table 1: </span>Lethal Repression Model</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">term</th>
+<th style="text-align: right;">estimate</th>
+<th style="text-align: right;">std.error</th>
+<th style="text-align: right;">statistic</th>
+<th style="text-align: right;">p.value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">(Intercept)</td>
+<td style="text-align: right;">-1.972</td>
+<td style="text-align: right;">0.047</td>
+<td style="text-align: right;">-41.723</td>
+<td style="text-align: right;">0.000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">urban_ruralRural</td>
+<td style="text-align: right;">0.060</td>
+<td style="text-align: right;">0.065</td>
+<td style="text-align: right;">0.927</td>
+<td style="text-align: right;">0.354</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">urban_ruralUrban</td>
+<td style="text-align: right;">-0.396</td>
+<td style="text-align: right;">0.060</td>
+<td style="text-align: right;">-6.552</td>
+<td style="text-align: right;">0.000</td>
+</tr>
+</tbody>
+</table>
 </div>
 <h2 id="interpretation-of-regression-tables">Interpretation of regression tables</h2>
 <p>“The No Repression Model:</p>
@@ -1652,7 +1740,7 @@ Other Coefficient: In ‘Other’ areas, the likelihood of ‘Lethal Repression�
 <h2 id="plot-visualizing-main-government-response-by-different-event-location">Plot Visualizing main Government response by different event location</h2>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='co'># Load necessary libraries</span></span>
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='co'># Load libraries</span></span>
 <span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://ggplot2.tidyverse.org'>ggplot2</a></span><span class='op'>)</span></span>
 <span></span>
 <span><span class='co'># Combine the summary tables for all three models</span></span>
@@ -1662,17 +1750,19 @@ Other Coefficient: In ‘Other’ areas, the likelihood of ‘Lethal Repression�
 <span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span><span class='va'>summary_lethal_repression</span>, Model <span class='op'>=</span> <span class='st'>"Lethal Repression"</span><span class='op'>)</span></span>
 <span><span class='op'>)</span></span>
 <span></span>
-<span><span class='co'># Create a forest plot</span></span>
+<span></span>
+<span><span class='co'># Create a coefficient plot using bar charts</span></span>
 <span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='va'>combined_summary</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>estimate</span>, y <span class='op'>=</span> <span class='va'>Model</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span></span>
-<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_point.html'>geom_point</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>color <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span><span class='op'>(</span><span class='va'>term</span><span class='op'>)</span><span class='op'>)</span>, size <span class='op'>=</span> <span class='fl'>3</span><span class='op'>)</span> <span class='op'>+</span></span>
-<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_errorbarh.html'>geom_errorbarh</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>xmin <span class='op'>=</span> <span class='va'>estimate</span> <span class='op'>-</span> <span class='fl'>1.96</span> <span class='op'>*</span> <span class='va'>std.error</span>, xmax <span class='op'>=</span> <span class='va'>estimate</span> <span class='op'>+</span> <span class='fl'>1.96</span> <span class='op'>*</span> <span class='va'>std.error</span><span class='op'>)</span>, height <span class='op'>=</span> <span class='fl'>0.2</span><span class='op'>)</span> <span class='op'>+</span></span>
-<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>labs</a></span><span class='op'>(</span>title <span class='op'>=</span> <span class='st'>"Forest Plot of Regression Coefficients by Location"</span>,</span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_bar.html'>geom_col</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>fill <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span><span class='op'>(</span><span class='va'>term</span><span class='op'>)</span><span class='op'>)</span>, position <span class='op'>=</span> <span class='st'>"dodge"</span><span class='op'>)</span> <span class='op'>+</span></span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>labs</a></span><span class='op'>(</span>title <span class='op'>=</span> <span class='st'>"Coefficient Plot of Regression Coefficients by Location"</span>,</span>
 <span>       x <span class='op'>=</span> <span class='st'>"Coefficient Estimate"</span>,</span>
 <span>       y <span class='op'>=</span> <span class='st'>"Model"</span><span class='op'>)</span> <span class='op'>+</span></span>
 <span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggtheme.html'>theme_minimal</a></span><span class='op'>(</span><span class='op'>)</span></span></code></pre>
 </div>
 <p><img src="index_files/figure-html5/unnamed-chunk-3-1.png" width="624" /></p>
 </div>
+<h2 id="explaining-coeficient-plot">Explaining Coeficient Plot</h2>
+<p>The coefficient plot visually represents the estimated coefficients from the logistic regression models for different repression categories (“No Repression,” “Non-Lethal Repression,” and “Lethal Repression”) across different location types (“Rural,” “Urban,” and “Other”). The plot allows for comparison of the coefficients for each location type within the same model and across different repression categories. Each bar represents the estimated effect (log-odds) of a specific location type on the likelihood of a particular government repression category. The direction of the bars indicates whether the effect is positive or negative. A positive coefficient suggests an increase in the likelihood of the repression category, while a negative coefficient suggests a decrease. The length of the bars indicates the magnitude of the effect.</p>
 <h2 id="conclusion">Conclusion</h2>
 <p>In conclusion, the results of the analysis give a mixed picture for the hypothesis. It suggests that ‘Other’ areas are less likely to experience ‘No Repression’ but more likely to face ‘Non-Lethal Repression’ compared to rural places. However, the expected higher chance of ‘Repression’ in capital cities and major urban areas isn’t consistently supported. This means that government responses vary across different locations. Limitations include potential bias in reported events and unexplored socio-political factors. To improve the analysis, future research should use more comprehensive data sources and consider additional factors that could influence government responses. Better data collection, including more contextual details, would help in getting a clearer picture of how governments react to events in different places.</p>
 <h2 id="further-analysis">Further Analysis</h2>
@@ -1724,7 +1814,7 @@ Other Coefficient: In ‘Other’ areas, the likelihood of ‘Lethal Repression�
 </div>
 <p><img src="index_files/figure-html5/unnamed-chunk-4-1.png" width="624" /></p>
 </div>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
 </div>
