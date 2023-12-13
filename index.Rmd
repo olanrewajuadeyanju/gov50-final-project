@@ -150,6 +150,8 @@ ggplot(combined_summary, aes(x = estimate, y = Model)) +
 
 ```
 
+## Explaining Coeficient Plot
+
 The coefficient plot visually represents the estimated coefficients from the logistic regression models for different repression categories ("No Repression," "Non-Lethal Repression," and "Lethal Repression") across different location types ("Rural," "Urban," and "Other"). The plot allows for comparison of the coefficients for each location type within the same model and across different repression categories. Each bar represents the estimated effect (log-odds) of a specific location type on the likelihood of a particular government repression category. The direction of the bars indicates whether the effect is positive or negative. A positive coefficient suggests an increase in the likelihood of the repression category, while a negative coefficient suggests a decrease. The length of the bars indicates the magnitude of the effect. 
 
 
