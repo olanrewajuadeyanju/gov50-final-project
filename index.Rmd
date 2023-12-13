@@ -9,12 +9,17 @@ output:
 
 
 
-## Project thoughts
+## Introduction
 
-Are governments in Africa more likely to use repression or violence against events (violent or nonviolent actions taken) that are located in urban areas? In this study, I plan to examine the relationship between the type of location of events and if they are faced with violence or repression from the government. I hypothesize that events taken at capital cities or major urban areas are faced with repression by the government, and events that are taken at more rural locations face relatively lower repression. I expect to find that events taken at capital cities and major urban areas face more repression. This is because major urban cities allow for easier mobilization and resource allocation for events (violent or nonviolent actions taken) and therefore pose a bigger threat to the government and are consequently faced with more repression. My data set consists of violent and nonviolent actions taken in Africa. My unit of analysis is an event (violent or nonviolent actions taken). My explanatory variable of interest is the location of events or action taken. (Coding of the event locality 1 = Capital city; 2 = Other major urban area (population greater than 100,000); 3 = Rural (including small towns, villages with population less than 100,000); 4 = Multiple urban areas; 5 = Multiple rural areas; 6 = Province/region listed, exact location unknown; 7 = Nationwide. Effects several cities and rural areas;  -99 = location unknown). My outcome variable of interest is "repress", whether the government used repression or violence against participants in the event. Coding of the repression variable 0 = no repression used, 1 = non-lethal repression used (e.g. tear gas, arrests, etc), 2 = lethal repression used (there must be deaths reported). This variable is measured from the Social Conflict Analysis Database (SCAD). If I observe greater repression usage for actions in major cities or urban areas, this would provide support for my hypothesis. If, on the other hand, I observe lower repression usage or the same level of repression as in rural areas, this would provide evidence against my hypothesis. When I run my regression of the count of events in urban areas and major cities on the repression variable, a positive, significant coefficient would indicate support for my hypothesis.
+The research question at the heart of this study explores the relationship between the use of repression or violence by African governments and the geographical location of events, encompassing both violent and nonviolent actions. The hypothesis claims that events occurring in capital cities or major urban areas are more likely to face government repression, contrasting with relatively lower repression in rural settings. The rationale behind this hypothesis stems from the belief that major urban areas provide a conducive environment for mobilization and resource allocation during events, thereby posing a greater perceived threat to the government and resulting in more substantial repression. The significance of this study lies in understanding the patterns of government response to events across different locations in Africa.
 
+## Data Section 
 
-## Milestone 3: Data Visualization
+The data for this study is drawn from the Social Conflict Analysis Database (SCAD), encompassing information on both violent and nonviolent actions in Africa. The unit of analysis is the event, with the key explanatory variable being the location of the event, categorized into various codes representing capital cities, major urban areas, rural settings, and more. The outcome variable of interest is "repress," capturing the government's use of repression or violence in response to participants in the event. The coding of the repression variable distinguishes between no repression, non-lethal repression (e.g., tear gas, arrests), and lethal repression (involving reported deaths).
+
+The research design employed is cross-sectional, focusing on a snapshot of events to analyze the relationship between location and government repression. To visualize the data, a plot has been generated to depict the proportions of government responses across different locations, providing a preliminary overview of the patterns observed. This study aims to use regression analysis to delve deeper into the relationship between the count of events in urban areas and major cities and the repression variable. A positive and significant coefficient in the regression results would show support to the hypothesis, indicating a higher likelihood of government repression in major urban areas.
+
+# Data Visualization of Outcome of Interest
 
 
 ```{r}
@@ -28,7 +33,8 @@ Data1 <- Data1 |>
   mutate(urban_rural = case_when(
     locnum %in% c(1, 2, 4) ~ "Urban",
     locnum %in% c(3, 5) ~ "Rural",
-    TRUE ~ "Other" # For the remaining locations
+    locnum %in% c(6, 7, -99) ~ "Other",
+    TRUE ~ "Other"
   ))
 
 
@@ -60,7 +66,106 @@ Data1 |>
 ```
 
 
-## Milestone 4: Analysis
+## Results: Regression table for Event location and Government Response
+
+
+```{r}
+# Load necessary libraries
+library(tidyverse)
+library(broom)
+
+# Create dummy variables for 'Non-Lethal Repression', 'Lethal Repression', and 'No Repression Used'
+Data1 <- Data1 |>
+  mutate(
+    NonLethalRepression = as.numeric(repress == 1),
+    LethalRepression = as.numeric(repress == 2),
+    NoRepression = as.numeric(repress == 0)
+  )
+
+# Fit logistic regression for "No Repression Used"
+model_no_repression <- glm(NoRepression ~ urban_rural, data = Data1, family = "binomial")
+
+# Fit logistic regression for "Non-Lethal Repression Used"
+model_non_lethal_repression <- glm(NonLethalRepression ~ urban_rural, data = Data1, family = "binomial")
+
+# Fit logistic regression for "Lethal Repression Used"
+model_lethal_repression <- glm(LethalRepression ~ urban_rural, data = Data1, family = "binomial")
+
+# Print summary for each model
+summary_no_repression <- tidy(model_no_repression)
+summary_non_lethal_repression <- tidy(model_non_lethal_repression)
+summary_lethal_repression <- tidy(model_lethal_repression)
+
+# Display the summaries
+print("No Repression:")
+print(summary_no_repression)
+
+print("Non-Lethal Repression:")
+print(summary_non_lethal_repression)
+
+print("Lethal Repression:")
+print(summary_lethal_repression)
+
+
+
+```
+
+## Interpretation of regression tables 
+
+"The No Repression Model:
+
+Intercept (Rural): The baseline likelihood of having 'No Repression' in rural areas is 1.08. This is our starting point.
+Urban Coefficient: In urban areas, the likelihood of 'No Repression' is 0.04 lower than in rural areas, but this difference is not big enough to be sure it's not just due to chance (p =0.467).
+Other Coefficient: In 'Other' areas, the likelihood of 'No Repression' is 0.24 lower than in rural areas, and this difference is highly statistically significant (p = 2.81e-08). Thus, in locations that do not neatly fit into the urban or rural categories, there is a substantial decrease in the likelihood of 'No Repression.'
+
+The Non-Lethal Repression Model:
+Intercept (Rural): The baseline likelihood of experiencing 'Non-Lethal Repression' in rural areas is -1.89. This sets our starting point.
+Urban Coefficient: In urban areas, the likelihood of 'Non-Lethal Repression' is 0.0019 higher than in rural areas, but this small difference is not statistically significant (p = 0.976).
+Other Coefficient: In 'Other' areas, the likelihood of 'Non-Lethal Repression' is 0.59 higher than in rural areas, and this difference is highly statistically significant (p = 1.19e-29). So, in places that don't neatly fit into urban or rural categories, there is a significant increase in the likelihood of 'Non-Lethal Repression.'
+
+Lethal Repression Model:
+Intercept (Rural): The baseline likelihood of experiencing 'Lethal Repression' in rural areas is -1.97. This is our starting point.
+Urban Coefficient: In urban areas, the likelihood of 'Lethal Repression' is 0.06 higher than in rural areas, but this difference is not statistically significant (p = 0.354).
+Other Coefficient: In 'Other' areas, the likelihood of 'Lethal Repression' is -0.40 lower than in rural areas, and this difference is highly statistically significant (p = 5.69e-11). So, in places that don't neatly fit into urban or rural categories, there is a significant decrease in the likelihood of 'Lethal Repression.'
+
+These results indicate that the type of governmental response varies across different locations, particularly in areas that are not distinctly urban or rural. In 'Other' areas, there is a notable decrease in the likelihood of 'No Repression' and a significant increase in the likelihood of 'Non-Lethal Repression,' but a significant decrease in the likelihood of 'Lethal Repression.' While these coefficients provide insights, caution is advised in attributing causation, as further research considering potential confounders is crucial for a more comprehensive understanding of the observed patterns.
+
+
+## Plot Visualizing main Government response by different event location
+
+
+```{r}
+
+# Load necessary libraries
+library(ggplot2)
+
+# Combine the summary tables for all three models
+combined_summary <- bind_rows(
+  mutate(summary_no_repression, Model = "No Repression"),
+  mutate(summary_non_lethal_repression, Model = "Non-Lethal Repression"),
+  mutate(summary_lethal_repression, Model = "Lethal Repression")
+)
+
+# Create a forest plot
+ggplot(combined_summary, aes(x = estimate, y = Model)) +
+  geom_point(aes(color = factor(term)), size = 3) +
+  geom_errorbarh(aes(xmin = estimate - 1.96 * std.error, xmax = estimate + 1.96 * std.error), height = 0.2) +
+  labs(title = "Forest Plot of Regression Coefficients by Location",
+       x = "Coefficient Estimate",
+       y = "Model") +
+  theme_minimal()
+
+
+```
+
+
+
+## Conclusion 
+
+In conclusion, the results of the analysis give a mixed picture for the hypothesis. It suggests that 'Other' areas are less likely to experience 'No Repression' but more likely to face 'Non-Lethal Repression' compared to rural places. However, the expected higher chance of 'Repression' in capital cities and major urban areas isn't consistently supported. This means that government responses vary across different locations. Limitations include potential bias in reported events and unexplored socio-political factors. To improve the analysis, future research should use more comprehensive data sources and consider additional factors that could influence government responses. Better data collection, including more contextual details, would help in getting a clearer picture of how governments react to events in different places.
+
+
+## Further Analysis
 
 This second visualization analyzes the outcome variable, 'Government response', in relation to another categorical variable, 'issue1'. The focus is on understanding the variation in government use of repression during events, based on the first issue mentioned as the primary source of tension leading to the taken action (violent or nonviolent). The initial visualization in milestone 3 did not provide a substantial difference in government repression across our x variable, location. To better understand the factors influencing government repression, we utilize the 'issue1' categorical variable, testing it across each category (1 = elections; 2 = economy, jobs; 3 = food, water, subsistence; 4 = environmental degradation; 5 = ethnic discrimination, ethnic issues; 6 = religious discrimination, religious issues; 7 = education; 8 = foreign affairs/relations; 9 = domestic war, violence, terrorism; 10 = human rights, democracy; 11 = pro-government; 12 = economic resources/assets; 13 = other; 14 = unknown, not-specified). This analysis reveals significant variation in the types of issues prompting government repression.
 
@@ -112,5 +217,9 @@ Data2 |>
 
 
 ```
+
+
+
+
 
 
